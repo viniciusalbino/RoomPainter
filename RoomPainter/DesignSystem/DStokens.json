@@ -1,0 +1,28 @@
+{
+    "properties":[
+        {
+            "type":"color",
+            "category":"color",
+            "name":"primaryColor",
+            "value":"#CBF16B"
+        },
+        {
+            "type":"color",
+            "category":"color",
+            "name":"secondaryColor",
+            "value":"#F5F4ED"
+        },
+        {
+            "type":"color",
+            "category":"color",
+            "name":"textPrimaryColor",
+            "value":"#212527"
+        },
+        {
+            "type":"color",
+            "category":"color",
+            "name":"textSecondaryColor",
+            "value":"#ffffff"
+        }
+    ]
+}
