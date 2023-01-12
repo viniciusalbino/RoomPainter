@@ -15,18 +15,19 @@ protocol SignUpPresenterOutputProtocol: AnyObject, ASAuthorizationControllerPres
 
 // MARK: - Presenter
 protocol SignUpPresenterInputProtocol: AnyObject {
-    
+    func requestAppleAuthorization()
 }
 
 // MARK: - Interactor
 protocol SignUpInteractorInputProtocol: AnyObject {
     func requestAppleLogin(request: ASAuthorizationAppleIDRequest, presentationContextProvider: SignUpPresenterOutputProtocol)
-    func requestFirebaseAuthentication(idToken: String, rawNonce: String)
+    func requestFirebaseAuthentication(idToken: String, rawNonce: String, user: User)
 }
 
 protocol SignUpInteractorOutputProtocol: AnyObject {
-    func finishedAuthorizationSuccess(authorization: ASAuthorization)
+    func finishedAppleAuthorizationSuccess(authorization: ASAuthorization)
     func finishedAuthorizationError(error: Error)
+    func finishedFirebaseAuthorizationSuccess(user: User)
 }
 
 // MARK: - Router

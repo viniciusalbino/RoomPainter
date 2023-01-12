@@ -29,7 +29,7 @@ extension SignUpInteractor: SignUpInteractorInputProtocol {
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        output?.finishedAuthorizationSuccess(authorization: authorization)
+        output?.finishedAppleAuthorizationSuccess(authorization: authorization)
     }
     
     /// - Tag: did_complete_error
@@ -38,7 +38,7 @@ extension SignUpInteractor: SignUpInteractorInputProtocol {
     }
     
     // MARK: - Firebase Authorization Methods
-    func requestFirebaseAuthentication(idToken: String, rawNonce: String) {
+    func requestFirebaseAuthentication(idToken: String, rawNonce: String, user: User) {
         let credential = OAuthProvider.credential(withProviderID: "apple.com",
                                                   idToken: idToken,
                                                   rawNonce: rawNonce)
@@ -48,7 +48,7 @@ extension SignUpInteractor: SignUpInteractorInputProtocol {
             if let error = error {
                 self?.output?.finishedAuthorizationError(error: error)
             } else {
-                print(result)
+                self?.output?.finishedFirebaseAuthorizationSuccess(user: user)
             }
         }
     }

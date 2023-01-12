@@ -26,12 +26,12 @@ final class SignUpPresenter {
     }
     
     // MARK: - Private methods
-    private func createNewUser(user: User) {
-        
-    }
-    
     private func logUser(user: User) {
-        
+        do {
+            try KeychainItem(service: "com.viniciusalbino.RoomPainter", account: "userIdentifier").saveItem(user.user)
+        } catch {
+            print("Unable to save userIdentifier to keychain.")
+        }
     }
 }
 
@@ -48,8 +48,8 @@ extension SignUpPresenter: SignUpPresenterInputProtocol {
 }
 
 // MARK: - Presenter Output Protocol
-extension SignUpPresenter: SignUpInteractorOutputProtocol {
-    func finishedAuthorizationSuccess(authorization: ASAuthorization) {
+extension SignUpPresenter: SignUpInteractorOutputProtocol {    
+    func finishedAppleAuthorizationSuccess(authorization: ASAuthorization) {
         switch authorization.credential {
             //Create a new account
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
@@ -62,13 +62,10 @@ extension SignUpPresenter: SignUpInteractorOutputProtocol {
                 return
             }
             
-            interactor.requestFirebaseAuthentication(idToken: idTokenString, rawNonce: currentNonce)
-            
             var user = User(user: appleIDCredential.user,
                             email: appleIDCredential.email,
                             fullName: appleIDCredential.fullName?.formatted())
-            createNewUser(user: user)
-            
+            interactor.requestFirebaseAuthentication(idToken: idTokenString, rawNonce: currentNonce, user: user)
             // Sign in using an existing iCloud Keychain
         case let passwordCredential as ASPasswordCredential:
             var user = User(user: passwordCredential.user,
@@ -81,5 +78,9 @@ extension SignUpPresenter: SignUpInteractorOutputProtocol {
     
     func finishedAuthorizationError(error: Error) {
         print(error)
+    }
+    
+    func finishedFirebaseAuthorizationSuccess(user: User) {
+        logUser(user: user)
     }
 }

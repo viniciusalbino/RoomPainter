@@ -35,14 +35,13 @@ final class SignUpViewController: UIViewController {
     
     private func setupView() {
         view.backgroundColor = UIColor.soma(.primaryColor)
-        
         addViews()
     }
     
     // MARK: - Setup Views
     private func addViews() {
         view.addSubview(loginButton)
-        loginButton.addTarget(self, action: #selector(login), for: .touchUpInside)
+        loginButton.addTarget(self, action: #selector(authorizeUser), for: .touchUpInside)
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             loginButton.widthAnchor.constraint(equalToConstant: 250),
@@ -53,8 +52,8 @@ final class SignUpViewController: UIViewController {
     }
     
     // MARK: - Private Methods
-    @objc private func login() {
-        
+    @objc private func authorizeUser() {
+        presenter.requestAppleAuthorization()
     }
 }
 
