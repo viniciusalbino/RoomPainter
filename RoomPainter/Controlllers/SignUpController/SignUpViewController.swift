@@ -7,10 +7,14 @@
 
 import Foundation
 import UIKit
+import AuthenticationServices
 
 final class SignUpViewController: UIViewController {
     // MARK: - Viper Properties
     private let presenter: SignUpPresenterInputProtocol
+    
+    // MARK: - Variables
+    private var loginButton = ASAuthorizationAppleIDButton()
     
     // MARK: - Init
     
@@ -23,9 +27,40 @@ final class SignUpViewController: UIViewController {
     required init?(coder: NSCoder) {
         nil
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupView()
+    }
+    
+    private func setupView() {
+        view.backgroundColor = UIColor.soma(.primaryColor)
+        
+        addViews()
+    }
+    
+    // MARK: - Setup Views
+    private func addViews() {
+        view.addSubview(loginButton)
+        loginButton.addTarget(self, action: #selector(login), for: .touchUpInside)
+        loginButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            loginButton.widthAnchor.constraint(equalToConstant: 250),
+            loginButton.heightAnchor.constraint(equalToConstant: 46),
+            loginButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
+    }
+    
+    // MARK: - Private Methods
+    @objc private func login() {
+        
+    }
 }
 
 // MARK: - Presenter output protocol
 extension SignUpViewController: SignUpPresenterOutputProtocol {
-    
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }    
 }

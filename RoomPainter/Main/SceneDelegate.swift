@@ -9,14 +9,20 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
-    var window: UIWindow?
+    var tabBarWindow: UIWindow?
+    var onboardingWindow: UIWindow?
 
+    // the window to present
+    var presentedWindow: UIWindow?
 
+    weak var scene: UIWindowScene?
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        if let scene = scene as? UIWindowScene {
+            self.scene = scene
+            makeWindows(scene: scene)
+            showFirstController()
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -47,9 +53,74 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
 
         // Save changes in the application's managed object context when the application transitions to the background.
-        (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
+    }
+    
+    
+    // MARK: - Window Management
+    func present(_ controller: UIViewController) {
+        tabBarWindow?.rootViewController?.present(controller, animated: true)
     }
 
+    private func makeWindow(scene: UIWindowScene) -> UIWindow {
+        let window = WindowWithViewOnTop(windowScene: scene)
+        window.tintColor = .white
+        return window
+    }
 
+    private func makeWindows(scene: UIWindowScene) {
+        tabBarWindow = makeTabBarWindow()
+        onboardingWindow = makeOnboardingWindow()
+    }
+
+    func makeTabBarWindow() -> UIWindow {
+        let tabBarWindow = makeWindow(scene: scene!)
+        let tabBarController = TabBarControllerBuilder().build()
+        tabBarWindow.rootViewController = tabBarController
+        return tabBarWindow
+    }
+    
+    func makeOnboardingWindow() -> UIWindow {
+        let onboardingWindow = makeWindow(scene: scene!)
+        let onboardingController = SignUpControllerBuilder().build()
+        onboardingWindow.rootViewController = onboardingController
+        return onboardingWindow
+    }
+    
+    private func showWindow(_ window: UIWindow?) {
+         guard let window = window else { return }
+         window.makeKeyAndVisible()        
+         presentedWindow = window
+     }
+    
+    func showMainContentWindow() {
+        showWindow(tabBarWindow)
+    }
+    
+    func showOnboardingWindow() {
+        showWindow(onboardingWindow)
+    }
+    
+    func showFirstController() {
+//        showMainContentWindow()
+        showOnboardingWindow()
+    }
+}
+
+// Window that can keep some view always on top of other views
+class WindowWithViewOnTop: UIWindow {
+
+    private weak var keepInFront: UIView?
+
+    func addSubviewAlwaysOnTop(_ view: UIView) {
+        keepInFront = view
+        addSubview(view)
+    }
+
+    override func addSubview(_ view: UIView) {
+        super.addSubview(view)
+        if let v = keepInFront {
+            bringSubviewToFront(v)
+        }
+    }
 }
 

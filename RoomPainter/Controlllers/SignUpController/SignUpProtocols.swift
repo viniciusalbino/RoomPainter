@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import AuthenticationServices
+
 // MARK: - ViewController
-protocol SignUpPresenterOutputProtocol: AnyObject {
-    
+protocol SignUpPresenterOutputProtocol: AnyObject, ASAuthorizationControllerPresentationContextProviding {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor
 }
 
 // MARK: - Presenter
@@ -18,11 +20,13 @@ protocol SignUpPresenterInputProtocol: AnyObject {
 
 // MARK: - Interactor
 protocol SignUpInteractorInputProtocol: AnyObject {
-    
+    func requestAppleLogin(request: ASAuthorizationAppleIDRequest, presentationContextProvider: SignUpPresenterOutputProtocol)
+    func requestFirebaseAuthentication(idToken: String, rawNonce: String)
 }
 
 protocol SignUpInteractorOutputProtocol: AnyObject {
-    
+    func finishedAuthorizationSuccess(authorization: ASAuthorization)
+    func finishedAuthorizationError(error: Error)
 }
 
 // MARK: - Router
