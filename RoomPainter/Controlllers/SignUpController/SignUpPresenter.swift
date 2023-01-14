@@ -27,10 +27,11 @@ final class SignUpPresenter {
     
     // MARK: - Private methods
     private func logUser(user: User) {
-        do {
-            try KeychainItem(service: "com.viniciusalbino.RoomPainter", account: "userIdentifier").saveItem(user.user)
-        } catch {
-            print("Unable to save userIdentifier to keychain.")
+        let userStorate = UserStorage()
+        if userStorate.saveUser(user: user) {
+            viewController?.finishedLogin(success: true)
+        } else {
+            viewController?.finishedLogin(success: false)
         }
     }
 }

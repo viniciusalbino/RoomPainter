@@ -36,7 +36,7 @@ public struct DSColor {
     public init(colorHex: String, value: String) {
         hexString = colorHex
         enumValue = Color(rawValue: value) ?? .clear
-        color = UIColor(hexString: colorHex)
+        color = UIColor(hex: colorHex)
     }
 }
 

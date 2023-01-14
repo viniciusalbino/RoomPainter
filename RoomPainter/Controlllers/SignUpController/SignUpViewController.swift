@@ -53,6 +53,7 @@ final class SignUpViewController: UIViewController {
     
     // MARK: - Private Methods
     @objc private func authorizeUser() {
+        startLoading()
         presenter.requestAppleAuthorization()
     }
 }
@@ -61,5 +62,16 @@ final class SignUpViewController: UIViewController {
 extension SignUpViewController: SignUpPresenterOutputProtocol {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return self.view.window!
-    }    
+    }
+    
+    func finishedLogin(success: Bool) {
+        if success {
+            stopLoading()
+            let scene = UIApplication.shared.connectedScenes.first
+            if let sceneClass : SceneDelegate = (scene?.delegate as? SceneDelegate) {
+                sceneClass.showFirstController()
+            }
+
+        }
+    }
 }

@@ -101,8 +101,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func showFirstController() {
-//        showMainContentWindow()
-        showOnboardingWindow()
+        Task.init {
+            if await UserStorage().checkLoggedUser() {
+                showMainContentWindow()
+                onboardingWindow?.removeFromSuperview()
+            } else {
+                showOnboardingWindow()
+                tabBarWindow?.removeFromSuperview()
+            }
+        }
     }
 }
 

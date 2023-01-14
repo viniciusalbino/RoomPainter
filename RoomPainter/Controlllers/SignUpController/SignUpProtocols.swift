@@ -11,6 +11,7 @@ import AuthenticationServices
 // MARK: - ViewController
 protocol SignUpPresenterOutputProtocol: AnyObject, ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor
+    func finishedLogin(success: Bool)
 }
 
 // MARK: - Presenter

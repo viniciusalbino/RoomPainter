@@ -99,13 +99,14 @@ struct KeychainItem {
         }
     }
     
-    func deleteItem() throws {
+    func deleteItem() -> Bool {
         // Delete the existing item from the keychain.
         let query = KeychainItem.keychainQuery(withService: service, account: account, accessGroup: accessGroup)
         let status = SecItemDelete(query as CFDictionary)
         
         // Throw an error if an unexpected status was returned.
-        guard status == noErr || status == errSecItemNotFound else { throw KeychainError.unhandledError }
+        guard status == noErr || status == errSecItemNotFound else { return false }
+        return true
     }
     
     // MARK: Convenience
@@ -124,26 +125,5 @@ struct KeychainItem {
         }
         
         return query
-    }
-    
-    /*
-     For the purpose of this demo app, the user identifier will be stored in the device keychain.
-     You should store the user identifier in your account management system.
-     */
-    static var currentUserIdentifier: String {
-        do {
-            let storedIdentifier = try KeychainItem(service: "com.example.apple-samplecode.juice", account: "userIdentifier").readItem()
-            return storedIdentifier
-        } catch {
-            return ""
-        }
-    }
-    
-    static func deleteUserIdentifierFromKeychain() {
-        do {
-            try KeychainItem(service: "com.example.apple-samplecode.juice", account: "userIdentifier").deleteItem()
-        } catch {
-            print("Unable to delete userIdentifier from keychain")
-        }
     }
 }
