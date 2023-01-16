@@ -63,13 +63,13 @@ extension SignUpPresenter: SignUpInteractorOutputProtocol {
                 return
             }
             
-            var user = User(user: appleIDCredential.user,
+            let user = User(user: appleIDCredential.user,
                             email: appleIDCredential.email,
                             fullName: appleIDCredential.fullName?.formatted())
             interactor.requestFirebaseAuthentication(idToken: idTokenString, rawNonce: currentNonce, user: user)
             // Sign in using an existing iCloud Keychain
         case let passwordCredential as ASPasswordCredential:
-            var user = User(user: passwordCredential.user,
+            let user = User(user: passwordCredential.user,
                             password: passwordCredential.password)
             logUser(user: user)
         default:
@@ -78,7 +78,7 @@ extension SignUpPresenter: SignUpInteractorOutputProtocol {
     }
     
     func finishedAuthorizationError(error: Error) {
-        print(error)
+        viewController?.finishedLogin(success: false)
     }
     
     func finishedFirebaseAuthorizationSuccess(user: User) {

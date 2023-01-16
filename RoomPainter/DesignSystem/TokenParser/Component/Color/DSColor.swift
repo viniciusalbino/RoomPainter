@@ -11,7 +11,8 @@ import UIKit
 public enum Color: String, CaseIterable, Codable {
     case primaryColor
     case secondaryColor
-    case terciaryColor
+    case textPrimaryColor
+    case textSecondaryColor
     
     case none
     case clear
@@ -41,7 +42,7 @@ public struct DSColor {
 }
 
 public extension UIColor {
-    class func soma(_ colorEnum: Color) -> UIColor {
+    class func designSystem(_ colorEnum: Color) -> UIColor {
         return colorEnum.color()
     }
 }

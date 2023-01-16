@@ -17,7 +17,7 @@ class TabBarController: UITabBarController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        loadTabBar(viewControllers: [UIViewController(), UIViewController()], tabs: [.scan, .profile])
+        loadTabBar(viewControllers: [CameraControllerBuilder().build(), UIViewController()], tabs: [.scan, .profile])
     }
     
     func loadTabBar(viewControllers: [UIViewController], tabs: [TabBarItem]) {
@@ -59,12 +59,19 @@ class TabBarController: UITabBarController {
     }
     
     internal func consistToTheme() {
-//        view.backgroundColor = .red
-        tabBar.tintColor = .white
-        tabBar.barTintColor = .red
-        tabBar.unselectedItemTintColor = .gray
+        tabBar.barTintColor = .designSystem(.primaryColor)
+        tabBar.tintColor = .designSystem(.textPrimaryColor)
+        tabBar.unselectedItemTintColor = .lightText
+        tabBar.isTranslucent = false
+        
         tabBar.items?.forEach { item in
-            item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .selected)
+            item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.designSystem(.textPrimaryColor)], for: .selected)
         }
+        
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .designSystem(.primaryColor)
+        tabBar.standardAppearance = appearance
+        tabBar.scrollEdgeAppearance = tabBar.standardAppearance
     }
 }

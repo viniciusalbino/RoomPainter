@@ -34,7 +34,7 @@ final class SignUpViewController: UIViewController {
     }
     
     private func setupView() {
-        view.backgroundColor = UIColor.soma(.primaryColor)
+        view.backgroundColor = .designSystem(.primaryColor)
         addViews()
     }
     
@@ -71,7 +71,18 @@ extension SignUpViewController: SignUpPresenterOutputProtocol {
             if let sceneClass : SceneDelegate = (scene?.delegate as? SceneDelegate) {
                 sceneClass.showFirstController()
             }
-
+        } else {
+            var dialogMessage = UIAlertController(title: "Ok", message: "Error Ocurred. Please try again", preferredStyle: .alert)
+            
+            // Create OK button with action handler
+            let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+                print("Ok button tapped")
+             })
+            
+            //Add OK button to a dialog message
+            dialogMessage.addAction(ok)
+            // Present Alert to
+            present(dialogMessage, animated: true, completion: nil)
         }
     }
 }

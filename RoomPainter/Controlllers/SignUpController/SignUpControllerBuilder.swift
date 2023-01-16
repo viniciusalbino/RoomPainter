@@ -17,7 +17,7 @@ final class SignUpControllerBuilder: ViewControllerBuilder {
         let viewController = SignUpViewController(presenter: presenter)
         presenter.viewController = viewController
         router.viewController = viewController
-        let navigationController = UINavigationController(rootViewController: viewController)
+        let navigationController = NavigationController(rootViewController: viewController)
         return navigationController
     }
 }

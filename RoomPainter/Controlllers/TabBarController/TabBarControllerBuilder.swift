@@ -11,7 +11,6 @@ import UIKit
 class TabBarControllerBuilder: ViewControllerBuilder {
     func build() -> UIViewController {
         let viewController = TabBarController()
-        let navigationController = CustomNavigationController(rootViewController: viewController)
-        return navigationController
+        return viewController
     }
 }
