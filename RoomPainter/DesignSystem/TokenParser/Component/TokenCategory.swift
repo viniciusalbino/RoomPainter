@@ -9,6 +9,6 @@ import Foundation
 
 enum TokenCategory: String, Mappable {
     case color = "color"
-    case fontSize = "font"
+    case fontSize = "font-size"
     case spacing = "spacing"
 }

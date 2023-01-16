@@ -8,11 +8,10 @@
 import Foundation
 
 public enum FontSize: String {
-    case xs
-    case sm
-    case md
-    case lg
-    case xl
+    case fontSizeSm
+    case fontSizeMd
+    case fontSizeLg
+    case fontSizeXl
     
     fileprivate var value: FontSize {
         return .init(rawValue: rawValue)!
@@ -21,13 +20,13 @@ public enum FontSize: String {
 
 public struct DSFontSize {
     public var fontSize: CGFloat = 12
-    public var enumValue: FontSize = .md
+    public var enumValue: FontSize = .fontSizeSm
     
     init() {
     }
     
     init(name: String, value: String) {
-        enumValue = FontSize(rawValue: name) ?? .xs
+        enumValue = FontSize(rawValue: name) ?? .fontSizeSm
         let formatter = NumberFormatter.usNumberFormatter()
         guard let number = formatter.number(from: value) else {
             fontSize = 12

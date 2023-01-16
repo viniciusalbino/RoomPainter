@@ -24,10 +24,16 @@ class NavigationController: UINavigationController {
     }
     
     internal func consistToTheme() {
+        let buttonAppearance = UIBarButtonItemAppearance()
+        let attributes = [NSAttributedString.Key.foregroundColor : UIColor.designSystem(.textSecondaryColor)]
+        buttonAppearance.normal.titleTextAttributes = attributes
+        buttonAppearance.highlighted.titleTextAttributes = attributes
+        
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = .designSystem(.primaryColor)
         appearance.titleTextAttributes = [.foregroundColor: UIColor.designSystem(.textSecondaryColor)]
+        appearance.buttonAppearance = buttonAppearance
         navigationBar.standardAppearance = appearance
         navigationBar.scrollEdgeAppearance = appearance
     }

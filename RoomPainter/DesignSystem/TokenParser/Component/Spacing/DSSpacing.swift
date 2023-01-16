@@ -8,13 +8,11 @@
 import Foundation
 
 public enum Spacing: String {
-    case xxs
-    case xs
-    case sm
-    case md
-    case lg
-    case xl
-    case xxl
+    case spacingXs
+    case spacingSm
+    case spacingMd
+    case spacingLg
+    case spacingXl
     case none
     
     fileprivate var value: Spacing {
@@ -24,13 +22,13 @@ public enum Spacing: String {
 
 public struct DSSpacing {
     public var spacingValue: CGFloat = 12
-    public var enumValue: FontSize = .md
+    public var enumValue: Spacing = .spacingXs
     
     init() {
     }
     
     init(name: String, value: String) {
-        enumValue = FontSize(rawValue: name) ?? .xs
+        enumValue = Spacing(rawValue: name) ?? .spacingXs
         let formatter = NumberFormatter.usNumberFormatter()
         guard let number = formatter.number(from: value) else {
             spacingValue = 12

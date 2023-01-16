@@ -23,6 +23,60 @@
             "category":"color",
             "name":"textSecondaryColor",
             "value":"#ffffff"
-        }
+        },
+        {
+           "type":"unit",
+           "category":"spacing",
+           "name":"spacingXs",
+           "value":"6"
+        },
+        {
+           "type":"unit",
+           "category":"spacing",
+           "name":"spacingSm",
+           "value":"12"
+        },
+        {
+           "type":"unit",
+           "category":"spacing",
+           "name":"spacingMd",
+           "value":"18"
+        },
+        {
+            "type":"unit",
+            "category":"spacing",
+            "name":"spacingLg",
+            "value":"32"
+         },
+         {
+            "type":"unit",
+            "category":"spacing",
+            "name":"spacingXl",
+            "value":"64"
+         },
+         {
+            "type":"size",
+            "category":"font-size",
+            "name":"fontSizeSm",
+            "value":"12"
+         },
+         {
+            "type":"size",
+            "category":"font-size",
+            "name":"fontSizeMd",
+            "value":"14"
+         },
+         {
+            "type":"size",
+            "category":"font-size",
+            "name":"fontSizeLg",
+            "value":"20"
+         },
+         {
+            "type":"size",
+            "category":"font-size",
+            "name":"fontSizeXl",
+            "value":"32"
+         }
     ]
 }
